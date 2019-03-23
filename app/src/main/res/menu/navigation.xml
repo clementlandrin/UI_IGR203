@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_aperitif"
+        android:icon="@mipmap/glass"
+        android:title="@string/title_aperitif" />
+
+    <item
+        android:id="@+id/navigation_entree"
+        android:icon="@mipmap/vegetable"
+        android:title="@string/title_entree" />
+
+    <item
+        android:id="@+id/navigation_dish"
+        android:icon="@mipmap/turkey"
+        android:title="@string/title_dish" />
+
+    <item
+        android:id="@+id/navigation_dessert"
+        android:icon="@mipmap/cake"
+        android:title="@string/title_dessert" />
+
+
+</menu>

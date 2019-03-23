@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">UI_IGR203</string>
+    <string name="title_activity_table">TableActivity</string>
+    <string name="title_aperitif">Aperitif</string>
+    <string name="title_entree">Entree</string>
+    <string name="title_dish">Dish</string>
+    <string name="title_dessert">Dessert</string>
+</resources>
