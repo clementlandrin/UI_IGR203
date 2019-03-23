@@ -8,10 +8,15 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
         <activity
             android:name=".TableActivity"
-            android:label="@string/title_activity_table"></activity>
+            android:parentActivityName=".RestaurantRoomActivity"
+            android:label="@string/title_activity_table">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.ui_igr203.RestaurantRoomActivity"/>
+            </activity>
         <activity
             android:name=".RestaurantRoomActivity">
             <intent-filter>
