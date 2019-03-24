@@ -6,11 +6,14 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class TableActivity extends AppCompatActivity {
+public class TableActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView mTextMessage;
+    private ImageButton center_table;
+    private View four_choice_menu;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -19,16 +22,12 @@ public class TableActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_aperitif:
-                    mTextMessage.setText(R.string.title_aperitif);
                     return true;
                 case R.id.navigation_entree:
-                    mTextMessage.setText(R.string.title_entree);
                     return true;
                 case R.id.navigation_dish:
-                    mTextMessage.setText(R.string.title_dish);
                     return true;
                 case R.id.navigation_dessert:
-                    mTextMessage.setText(R.string.title_dessert);
                     return true;
             }
             return false;
@@ -40,7 +39,12 @@ public class TableActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
+        center_table = findViewById(R.id.center_table);
+        center_table.setOnClickListener(this);
+
+        four_choice_menu = findViewById(R.id.four_choice);
+        four_choice_menu.setVisibility(View.INVISIBLE);
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setItemIconTintList(null);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -49,4 +53,19 @@ public class TableActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch(v.getId())
+        {
+            case R.id.center_table:
+                if (four_choice_menu.getVisibility() == View.INVISIBLE)
+                {
+                    four_choice_menu.setVisibility(View.VISIBLE);
+                }
+                else if (four_choice_menu.getVisibility() == View.VISIBLE)
+                {
+                    four_choice_menu.setVisibility(View.INVISIBLE);
+                }
+        }
+    }
 }
