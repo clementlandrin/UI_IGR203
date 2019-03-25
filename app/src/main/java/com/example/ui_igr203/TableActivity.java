@@ -21,6 +21,13 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class TableActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageButton center_table;
@@ -32,6 +39,64 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
     private Button category2;
     private Button category3;
     private Button category4;
+    private BottomNavigationView navigation;
+    List<String> aperitifCategories;
+    List<String> entreeCategories;
+    List<String> dishCategories;
+    List<String> dessertCategories;
+
+    List<String> currentCategory;
+
+    private void setCategoryText(List<String> categories)
+    {
+        if(categories == null)
+        {
+            Log.e("Setting category text","categories is null");
+            return;
+        }
+        if (categories.size()<4)
+        {
+            category4.setText("");
+            category4.setBackgroundColor(Color.WHITE);
+            if(categories.size()<3)
+            {
+                category3.setText("");
+                category3.setBackgroundColor(Color.WHITE);
+                if(categories.size()<2)
+                {
+                    category2.setText("");
+                    category2.setBackgroundColor(Color.WHITE);
+                    if(categories.size()<1)
+                    {
+                        category1.setText("");
+                        category1.setBackgroundColor(Color.WHITE);
+                    }
+                }
+            }
+        }
+        for(int i = 0; i < categories.size(); i++)
+        {
+            switch (i)
+            {
+                case 0:
+                    category1.setText(categories.get(0));
+                    category1.setBackgroundColor(Color.GRAY);
+                    break;
+                case 1:
+                    category2.setText(categories.get(1));
+                    category2.setBackgroundColor(Color.GRAY);
+                    break;
+                case 2:
+                    category3.setText(categories.get(2));
+                    category3.setBackgroundColor(Color.GRAY);
+                    break;
+                case 3:
+                    category4.setText(categories.get(3));
+                    category4.setBackgroundColor(Color.GRAY);
+                    break;
+            }
+        }
+    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -42,27 +107,106 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                 case R.id.navigation_aperitif:
                     center_table.setColorFilter(getResources().getColor(R.color.aperitifColor),PorterDuff.Mode.SRC_IN);
                     choice.setVisibility(View.INVISIBLE);
+                    currentCategory = aperitifCategories;
+                    setCategoryText(currentCategory);
                     return true;
                 case R.id.navigation_entree:
                     center_table.setColorFilter(getResources().getColor(R.color.entreeColor),PorterDuff.Mode.SRC_IN);
                     choice.setVisibility(View.INVISIBLE);
+                    currentCategory = entreeCategories;
+                    setCategoryText(currentCategory);
                     return true;
                 case R.id.navigation_dish:
                     center_table.setColorFilter(getResources().getColor(R.color.dishColor),PorterDuff.Mode.SRC_IN);
                     choice.setVisibility(View.INVISIBLE);
+                    currentCategory = dishCategories;
+                    setCategoryText(currentCategory);
                     return true;
                 case R.id.navigation_dessert:
                     center_table.setColorFilter(getResources().getColor(R.color.dessertColor),PorterDuff.Mode.SRC_IN);
                     choice.setVisibility(View.INVISIBLE);
+                    currentCategory = dessertCategories;
+                    setCategoryText(currentCategory);
                     return true;
             }
             return false;
         }
     };
 
+    private String ReadMenu()
+    {
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(new
+                    File(getFilesDir()+File.separator+"menu.txt")));
+            String read;
+            StringBuilder builder = new StringBuilder("");
+
+            while((read = bufferedReader.readLine()) != null){
+                builder.append(read);
+            }
+            Log.d("Output", builder.toString());
+            bufferedReader.close();
+            return builder.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        String[] split = ReadMenu().split("'");
+
+        if (split.length!=0)
+        {
+            Log.i("Set category from file", "size is not 0");
+            aperitifCategories = new ArrayList<>();
+            entreeCategories = new ArrayList<>();
+            dishCategories = new ArrayList<>();
+            dessertCategories = new ArrayList<>();
+
+            for (int i = 0; i < split.length; i++) {
+                String[] splitTmp = split[i].split(",");
+                switch (i)
+                {
+                    case 0:
+                        Log.i("Set category from file", "entering case 0");
+                        for(int j = 0; j < splitTmp.length; j++)
+                        {
+                            Log.i("Set from file 0", splitTmp[j]);
+                            aperitifCategories.add(splitTmp[j]);
+                        }
+                        break;
+                    case 1:
+                        Log.i("Set category from file", "entering case 1");
+                        for(int j = 0; j < splitTmp.length; j++)
+                        {
+                            Log.i("Set from file 1", splitTmp[j]);
+                            entreeCategories.add(splitTmp[j]);
+                        }
+                        break;
+                    case 2:
+                        Log.i("Set category from file", "entering case 2");
+                        for(int j = 0; j < splitTmp.length; j++)
+                        {
+                            Log.i("Set from file 2", splitTmp[j]);
+                            dishCategories.add(splitTmp[j]);
+                        }
+                        break;
+                    case 3:
+                        Log.i("Set category from file", "entering case 3");
+                        for(int j = 0; j < splitTmp.length; j++)
+                        {
+                            Log.i("Set from file 3", splitTmp[j]);
+                            dessertCategories.add(splitTmp[j]);
+                        }
+                        break;
+                }
+            }
+        }
+        currentCategory = aperitifCategories;
+
         setContentView(R.layout.activity_table);
 
         four_choice_menu_was_displayed = false;
@@ -83,13 +227,16 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         category2 = findViewById(R.id.category2);
         category3 = findViewById(R.id.category3);
         category4 = findViewById(R.id.category4);
+
+        setCategoryText(currentCategory);
+
         category1.setOnClickListener(this);
         category2.setOnClickListener(this);
         category3.setOnClickListener(this);
         category4.setOnClickListener(this);
 
 
-        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         SpannableString aperitifString = new SpannableString(getResources().getString(R.string.title_aperitif));
@@ -128,22 +275,22 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
             case R.id.center_table:
                 break;
             case R.id.category1:
-                choice.setText("category1");
+                choice.setText(category1.getText());
                 choice.setVisibility(View.VISIBLE);
                 four_choice_menu.setVisibility(View.INVISIBLE);
                 break;
             case R.id.category2:
-                choice.setText("category2");
+                choice.setText(category2.getText());
                 choice.setVisibility(View.VISIBLE);
                 four_choice_menu.setVisibility(View.INVISIBLE);
                 break;
             case R.id.category3:
-                choice.setText("category3");
+                choice.setText(category3.getText());
                 choice.setVisibility(View.VISIBLE);
                 four_choice_menu.setVisibility(View.INVISIBLE);
                 break;
             case R.id.category4:
-                choice.setText("category4");
+                choice.setText(category4.getText());
                 choice.setVisibility(View.VISIBLE);
                 four_choice_menu.setVisibility(View.INVISIBLE);
                 break;
@@ -178,22 +325,26 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         float centerX = location[0] + center_table.getWidth()*density/4;
         float centerY = location[1] + center_table.getHeight()*density/4;
 
-        if (x < centerX && y < centerY)
+        if (y > navigation.getY())
+        {
+            return false;
+        }
+        if (currentCategory.size()>0 && x < centerX && y < centerY)
         {
             category1.performClick();
             return true;
         }
-        else if (x > centerX && y < centerY)
+        else if (currentCategory.size()>1 && x > centerX && y < centerY)
         {
             category2.performClick();
             return true;
         }
-        else if (x < centerX && y > centerY)
+        else if (currentCategory.size()>2 && x > centerX && y > centerY)
         {
             category3.performClick();
             return true;
         }
-        else if (x > centerX && y > centerY)
+        else if (currentCategory.size()>3 && x < centerX && y > centerY)
         {
             category4.performClick();
             return true;
