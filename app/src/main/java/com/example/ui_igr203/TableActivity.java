@@ -1,21 +1,26 @@
 package com.example.ui_igr203;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 public class TableActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageButton center_table;
     private View four_choice_menu;
+    private boolean four_choice_menu_was_displayed;
+    private Button category1;
+    private Button category2;
+    private Button category3;
+    private Button category4;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -41,11 +46,23 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table);
 
+        four_choice_menu_was_displayed = false;
+
         center_table = findViewById(R.id.center_table);
         center_table.setOnClickListener(this);
 
         four_choice_menu = findViewById(R.id.four_choice);
         four_choice_menu.setVisibility(View.INVISIBLE);
+
+        category1 = findViewById(R.id.category1);
+        category2 = findViewById(R.id.category2);
+        category3 = findViewById(R.id.category3);
+        category4 = findViewById(R.id.category4);
+        category1.setOnClickListener(this);
+        category2.setOnClickListener(this);
+        category3.setOnClickListener(this);
+        category4.setOnClickListener(this);
+
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setItemIconTintList(null);
@@ -57,11 +74,14 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        // useless for now as dispatchTouchMethod hide
+        // useless for now as dispatchTouchMethod handle touch input
         switch(v.getId())
         {
             case R.id.center_table:
                 break;
+            case R.id.category1:
+                center_table.setVisibility(View.INVISIBLE);
+
         }
     }
 
@@ -72,8 +92,6 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         int[] location = new int[2];
 
         center_table.getLocationOnScreen(location);
-        Log.i("check is on table","event::x is : "+Float.toString(x));
-        Log.i("check is on table","event::y is : "+Float.toString(y));
 
         if(center_table != null)
         {
@@ -95,6 +113,9 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         switch(action) {
             case MotionEvent.ACTION_DOWN:
                 Log.i("onTouchEvent","ACTION_DOWN");
+
+                four_choice_menu_was_displayed = (four_choice_menu.getVisibility() == View.VISIBLE);
+
                 if (checkIsOnCenterTable(event.getX(), event.getY()) && four_choice_menu != null)
                 {
                     four_choice_menu.setVisibility(View.VISIBLE);
@@ -106,6 +127,10 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
             case MotionEvent.ACTION_UP:
                 Log.i("onTouchEvent","ACTION_UP");
                 if (!checkIsOnCenterTable(event.getX(), event.getY()) && four_choice_menu != null)
+                {
+                    four_choice_menu.setVisibility(View.INVISIBLE);
+                }
+                else if (checkIsOnCenterTable(event.getX(), event.getY()) && four_choice_menu_was_displayed && four_choice_menu != null)
                 {
                     four_choice_menu.setVisibility(View.INVISIBLE);
                 }
