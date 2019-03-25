@@ -33,8 +33,11 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
     private ImageButton center_table;
     private View four_choice_menu;
     private TextView choice;
+
     private boolean started_from_center_table;
     private boolean four_choice_menu_was_displayed;
+    private boolean choice_selected;
+
     private Button category1;
     private Button category2;
     private Button category3;
@@ -211,6 +214,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
 
         four_choice_menu_was_displayed = false;
         started_from_center_table = false;
+        choice_selected = false;
 
         center_table = findViewById(R.id.center_table);
         center_table.setOnClickListener(this);
@@ -228,13 +232,12 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         category3 = findViewById(R.id.category3);
         category4 = findViewById(R.id.category4);
 
-        setCategoryText(currentCategory);
-
         category1.setOnClickListener(this);
         category2.setOnClickListener(this);
         category3.setOnClickListener(this);
         category4.setOnClickListener(this);
 
+        setCategoryText(currentCategory);
 
         navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -275,23 +278,39 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
             case R.id.center_table:
                 break;
             case R.id.category1:
-                choice.setText(category1.getText());
-                choice.setVisibility(View.VISIBLE);
+                if(currentCategory.size()>0)
+                {
+                    choice.setText(category1.getText());
+                    choice.setVisibility(View.VISIBLE);
+                    choice_selected = true;
+                }
                 four_choice_menu.setVisibility(View.INVISIBLE);
                 break;
             case R.id.category2:
-                choice.setText(category2.getText());
-                choice.setVisibility(View.VISIBLE);
+                if(currentCategory.size()>0)
+                {
+                    choice.setText(category2.getText());
+                    choice.setVisibility(View.VISIBLE);
+                    choice_selected = true;
+                }
                 four_choice_menu.setVisibility(View.INVISIBLE);
                 break;
             case R.id.category3:
-                choice.setText(category3.getText());
-                choice.setVisibility(View.VISIBLE);
+                if(currentCategory.size()>0)
+                {
+                    choice.setText(category3.getText());
+                    choice.setVisibility(View.VISIBLE);
+                    choice_selected = true;
+                }
                 four_choice_menu.setVisibility(View.INVISIBLE);
                 break;
             case R.id.category4:
-                choice.setText(category4.getText());
-                choice.setVisibility(View.VISIBLE);
+                if(currentCategory.size()>0)
+                {
+                    choice.setText(category4.getText());
+                    choice.setVisibility(View.VISIBLE);
+                    choice_selected = true;
+                }
                 four_choice_menu.setVisibility(View.INVISIBLE);
                 break;
         }
@@ -329,22 +348,22 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         {
             return false;
         }
-        if (currentCategory.size()>0 && x < centerX && y < centerY)
+        if (x < centerX && y < centerY)
         {
             category1.performClick();
             return true;
         }
-        else if (currentCategory.size()>1 && x > centerX && y < centerY)
+        else if (x > centerX && y < centerY)
         {
             category2.performClick();
             return true;
         }
-        else if (currentCategory.size()>2 && x > centerX && y > centerY)
+        else if (x > centerX && y > centerY)
         {
             category3.performClick();
             return true;
         }
-        else if (currentCategory.size()>3 && x < centerX && y > centerY)
+        else if (x < centerX && y > centerY)
         {
             category4.performClick();
             return true;
@@ -354,47 +373,49 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        int action = event.getActionMasked();
-        Log.i("onTouchEvent","trigerred");
-        switch(action) {
-            case MotionEvent.ACTION_DOWN:
-                Log.i("onTouchEvent","ACTION_DOWN");
+        if (!choice_selected){
+            int action = event.getActionMasked();
+            Log.i("onTouchEvent","trigerred");
+            switch(action) {
+                case MotionEvent.ACTION_DOWN:
+                    Log.i("onTouchEvent","ACTION_DOWN");
 
-                four_choice_menu_was_displayed = (four_choice_menu.getVisibility() == View.VISIBLE);
+                    four_choice_menu_was_displayed = (four_choice_menu.getVisibility() == View.VISIBLE);
 
-                if (checkIsOnCenterTable(event.getX(), event.getY()) && four_choice_menu != null)
-                {
-                    started_from_center_table = true;
-                    four_choice_menu.setVisibility(View.VISIBLE);
-                }
-                else
-                {
-                    started_from_center_table = false;
-                }
-                break;
-            case MotionEvent.ACTION_MOVE:
-                Log.i("onTouchEvent","ACTION_MOVE");
-                break;
-            case MotionEvent.ACTION_UP:
-                Log.i("onTouchEvent","ACTION_UP");
-                if (!checkIsOnCenterTable(event.getX(), event.getY()) && four_choice_menu != null)
-                {
-                    if(started_from_center_table)
+                    if (checkIsOnCenterTable(event.getX(), event.getY()) && four_choice_menu != null)
                     {
-                        if(clickOnReleaseButton(event.getX(), event.getY()))
+                        started_from_center_table = true;
+                        four_choice_menu.setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        started_from_center_table = false;
+                    }
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    Log.i("onTouchEvent","ACTION_MOVE");
+                    break;
+                case MotionEvent.ACTION_UP:
+                    Log.i("onTouchEvent","ACTION_UP");
+                    if (!checkIsOnCenterTable(event.getX(), event.getY()) && four_choice_menu != null)
+                    {
+                        if(started_from_center_table)
                         {
-                            four_choice_menu.setVisibility(View.INVISIBLE);
+                            if(clickOnReleaseButton(event.getX(), event.getY()))
+                            {
+                                four_choice_menu.setVisibility(View.INVISIBLE);
+                            }
                         }
                     }
-                }
-                else if (checkIsOnCenterTable(event.getX(), event.getY()) && four_choice_menu_was_displayed && four_choice_menu != null)
-                {
-                    four_choice_menu.setVisibility(View.INVISIBLE);
-                }
-                break;
-            case MotionEvent.ACTION_CANCEL:
-                Log.i("onTouchEvent","ACTION_CANCEL");
-                break;
+                    else if (checkIsOnCenterTable(event.getX(), event.getY()) && four_choice_menu_was_displayed && four_choice_menu != null)
+                    {
+                        four_choice_menu.setVisibility(View.INVISIBLE);
+                    }
+                    break;
+                case MotionEvent.ACTION_CANCEL:
+                    Log.i("onTouchEvent","ACTION_CANCEL");
+                    break;
+            }
         }
         return super.dispatchTouchEvent(event);
     }
