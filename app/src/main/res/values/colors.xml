@@ -3,4 +3,8 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="aperitifColor">#A70101</color>
+    <color name="entreeColor">#138D00</color>
+    <color name="dishColor">#FF8E4A</color>
+    <color name="dessertColor">#442A00</color>
 </resources>

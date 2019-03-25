@@ -8,4 +8,20 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AperitifTextAppearance">
+        <item name="android:textColor">@color/aperitifColor</item>
+    </style>
+
+    <style name="EntreeTextAppearance">
+        <item name="android:textColor">@color/entreeColor</item>
+    </style>
+
+    <style name="DishTextAppearance">
+        <item name="android:textColor">@color/dishColor</item>
+    </style>
+
+    <style name="DessertTextAppearance">
+        <item name="android:textColor">@color/dessertColor</item>
+    </style>
+
 </resources>

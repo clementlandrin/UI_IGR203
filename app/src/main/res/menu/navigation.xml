@@ -4,22 +4,26 @@
     <item
         android:id="@+id/navigation_aperitif"
         android:icon="@mipmap/glass"
-        android:title="@string/title_aperitif" />
+        android:title="@string/title_aperitif"
+        android:iconTint="@color/aperitifColor"/>
 
     <item
         android:id="@+id/navigation_entree"
-        android:icon="@mipmap/vegetable"
-        android:title="@string/title_entree" />
+        android:icon="@mipmap/salad"
+        android:title="@string/title_entree"
+        android:iconTint="@color/entreeColor"/>
 
     <item
         android:id="@+id/navigation_dish"
-        android:icon="@mipmap/turkey"
-        android:title="@string/title_dish" />
+        android:icon="@mipmap/chicken"
+        android:title="@string/title_dish"
+        android:iconTint="@color/dishColor"/>
 
     <item
         android:id="@+id/navigation_dessert"
-        android:icon="@mipmap/cake"
-        android:title="@string/title_dessert" />
+        android:icon="@mipmap/pieceofcake"
+        android:title="@string/title_dessert"
+        android:iconTint="@color/dessertColor"/>
 
 
 </menu>

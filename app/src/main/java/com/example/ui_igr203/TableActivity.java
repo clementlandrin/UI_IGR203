@@ -1,21 +1,32 @@
 package com.example.ui_igr203;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.text.SpannableString;
+import android.text.style.TextAppearanceSpan;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class TableActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageButton center_table;
     private View four_choice_menu;
+    private TextView choice;
+    private boolean started_from_center_table;
     private boolean four_choice_menu_was_displayed;
     private Button category1;
     private Button category2;
@@ -29,12 +40,20 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_aperitif:
+                    center_table.setColorFilter(getResources().getColor(R.color.aperitifColor),PorterDuff.Mode.SRC_IN);
+                    choice.setVisibility(View.INVISIBLE);
                     return true;
                 case R.id.navigation_entree:
+                    center_table.setColorFilter(getResources().getColor(R.color.entreeColor),PorterDuff.Mode.SRC_IN);
+                    choice.setVisibility(View.INVISIBLE);
                     return true;
                 case R.id.navigation_dish:
+                    center_table.setColorFilter(getResources().getColor(R.color.dishColor),PorterDuff.Mode.SRC_IN);
+                    choice.setVisibility(View.INVISIBLE);
                     return true;
                 case R.id.navigation_dessert:
+                    center_table.setColorFilter(getResources().getColor(R.color.dessertColor),PorterDuff.Mode.SRC_IN);
+                    choice.setVisibility(View.INVISIBLE);
                     return true;
             }
             return false;
@@ -47,9 +66,15 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_table);
 
         four_choice_menu_was_displayed = false;
+        started_from_center_table = false;
 
         center_table = findViewById(R.id.center_table);
         center_table.setOnClickListener(this);
+
+        choice = findViewById(R.id.choice);
+        choice.setVisibility(View.INVISIBLE);
+        choice.setTextColor(Color.WHITE);
+        choice.setBackgroundColor(Color.BLACK);
 
         four_choice_menu = findViewById(R.id.four_choice);
         four_choice_menu.setVisibility(View.INVISIBLE);
@@ -64,9 +89,32 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         category4.setOnClickListener(this);
 
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setItemIconTintList(null);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        SpannableString aperitifString = new SpannableString(getResources().getString(R.string.title_aperitif));
+        aperitifString.setSpan(new TextAppearanceSpan(this, R.style.AperitifTextAppearance), 0, aperitifString.length(), 0);
+
+        SpannableString entreeString = new SpannableString(getResources().getString(R.string.title_entree));
+        entreeString.setSpan(new TextAppearanceSpan(this, R.style.EntreeTextAppearance), 0, entreeString.length(), 0);
+
+        SpannableString dishString = new SpannableString(getResources().getString(R.string.title_dish));
+        dishString.setSpan(new TextAppearanceSpan(this, R.style.DishTextAppearance), 0, dishString.length(), 0);
+
+        SpannableString dessertString = new SpannableString(getResources().getString(R.string.title_dessert));
+        dessertString.setSpan(new TextAppearanceSpan(this, R.style.DessertTextAppearance), 0, dessertString.length(), 0);
+
+        navigation.getMenu().findItem(R.id.navigation_aperitif).getIcon().setColorFilter(getResources().getColor(R.color.aperitifColor),PorterDuff.Mode.SRC_IN);
+        navigation.getMenu().findItem(R.id.navigation_aperitif).setTitle(aperitifString);
+
+        navigation.getMenu().findItem(R.id.navigation_entree).getIcon().setColorFilter(getResources().getColor(R.color.entreeColor),PorterDuff.Mode.SRC_IN);
+        navigation.getMenu().findItem(R.id.navigation_entree).setTitle(entreeString);
+
+        navigation.getMenu().findItem(R.id.navigation_dish).getIcon().setColorFilter(getResources().getColor(R.color.dishColor),PorterDuff.Mode.SRC_IN);
+        navigation.getMenu().findItem(R.id.navigation_dish).setTitle(dishString);
+
+        navigation.getMenu().findItem(R.id.navigation_dessert).getIcon().setColorFilter(getResources().getColor(R.color.dessertColor),PorterDuff.Mode.SRC_IN);
+        navigation.getMenu().findItem(R.id.navigation_dessert).setTitle(dessertString);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -80,8 +128,25 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
             case R.id.center_table:
                 break;
             case R.id.category1:
-                center_table.setVisibility(View.INVISIBLE);
-
+                choice.setText("category1");
+                choice.setVisibility(View.VISIBLE);
+                four_choice_menu.setVisibility(View.INVISIBLE);
+                break;
+            case R.id.category2:
+                choice.setText("category2");
+                choice.setVisibility(View.VISIBLE);
+                four_choice_menu.setVisibility(View.INVISIBLE);
+                break;
+            case R.id.category3:
+                choice.setText("category3");
+                choice.setVisibility(View.VISIBLE);
+                four_choice_menu.setVisibility(View.INVISIBLE);
+                break;
+            case R.id.category4:
+                choice.setText("category4");
+                choice.setVisibility(View.VISIBLE);
+                four_choice_menu.setVisibility(View.INVISIBLE);
+                break;
         }
     }
 
@@ -106,6 +171,36 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         return b;
     }
 
+    private boolean clickOnReleaseButton(float x, float y) {
+        int[] location = new int[2];
+        float density = getResources().getDisplayMetrics().density;
+        center_table.getLocationOnScreen(location);
+        float centerX = location[0] + center_table.getWidth()*density/4;
+        float centerY = location[1] + center_table.getHeight()*density/4;
+
+        if (x < centerX && y < centerY)
+        {
+            category1.performClick();
+            return true;
+        }
+        else if (x > centerX && y < centerY)
+        {
+            category2.performClick();
+            return true;
+        }
+        else if (x < centerX && y > centerY)
+        {
+            category3.performClick();
+            return true;
+        }
+        else if (x > centerX && y > centerY)
+        {
+            category4.performClick();
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         int action = event.getActionMasked();
@@ -118,7 +213,12 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
 
                 if (checkIsOnCenterTable(event.getX(), event.getY()) && four_choice_menu != null)
                 {
+                    started_from_center_table = true;
                     four_choice_menu.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    started_from_center_table = false;
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -128,7 +228,13 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                 Log.i("onTouchEvent","ACTION_UP");
                 if (!checkIsOnCenterTable(event.getX(), event.getY()) && four_choice_menu != null)
                 {
-                    four_choice_menu.setVisibility(View.INVISIBLE);
+                    if(started_from_center_table)
+                    {
+                        if(clickOnReleaseButton(event.getX(), event.getY()))
+                        {
+                            four_choice_menu.setVisibility(View.INVISIBLE);
+                        }
+                    }
                 }
                 else if (checkIsOnCenterTable(event.getX(), event.getY()) && four_choice_menu_was_displayed && four_choice_menu != null)
                 {
