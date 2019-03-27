@@ -53,10 +53,11 @@ public class RestaurantRoomActivity extends AppCompatActivity implements View.On
         table4.setOnClickListener(this);
     }
 
-    private void launchTableActivityWithId(String table_id)
+    private void launchTableActivity(String table_id, int chair_number)
     {
         Intent intent = new Intent(this, TableActivity.class);
-        intent.putExtra("table_id", table_id); // send here the number of the table that has been clicked.
+        intent.putExtra("table_id", table_id); // send here the id of the table that has been clicked.
+        intent.putExtra("chair_number", chair_number); // send here the number of chairs of the table that has been clicked.
         startActivity(intent);
     }
     @Override
@@ -64,22 +65,22 @@ public class RestaurantRoomActivity extends AppCompatActivity implements View.On
         switch (v.getId())
         {
             case R.id.button:
-                launchTableActivityWithId("1");
+                launchTableActivity("1", 4);
                 break;
             case R.id.button2:
-                launchTableActivityWithId("2");
+                launchTableActivity("2", 2);
                 break;
             case R.id.button3:
-                launchTableActivityWithId("3");
+                launchTableActivity("3", 1);
                 break;
             case R.id.button4:
-                launchTableActivityWithId("4");
+                launchTableActivity("4", 4);
                 break;
             case R.id.button5:
-                launchTableActivityWithId("5");
+                launchTableActivity("5", 2);
                 break;
             case R.id.button6:
-                launchTableActivityWithId("6");
+                launchTableActivity("6", 4);
                 break;
 
         }

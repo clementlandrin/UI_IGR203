@@ -16,6 +16,51 @@
         app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/chair_2"
+        android:layout_width="53dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/center_table"
+        app:layout_constraintStart_toStartOf="@+id/center_table"
+        app:layout_constraintTop_toBottomOf="@+id/center_table"
+        app:srcCompat="@mipmap/chair" />
+
+    <ImageView
+        android:id="@+id/chair_1"
+        android:layout_width="53dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="8dp"
+        android:rotation="180"
+        app:layout_constraintBottom_toTopOf="@+id/choice"
+        app:layout_constraintEnd_toEndOf="@+id/center_table"
+        app:layout_constraintStart_toStartOf="@+id/center_table"
+        app:srcCompat="@mipmap/chair" />
+
+    <ImageView
+        android:id="@+id/chair_3"
+        android:layout_width="53dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:rotation="90"
+        app:layout_constraintBottom_toBottomOf="@+id/choice"
+        app:layout_constraintEnd_toStartOf="@+id/center_table"
+        app:layout_constraintTop_toTopOf="@+id/choice"
+        app:srcCompat="@mipmap/chair" />
+
+    <ImageView
+        android:id="@+id/chair_4"
+        android:layout_width="53dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:rotation="-90"
+        app:layout_constraintBottom_toBottomOf="@+id/choice"
+        app:layout_constraintStart_toEndOf="@+id/center_table"
+        app:layout_constraintTop_toTopOf="@+id/choice"
+        app:srcCompat="@mipmap/chair" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="0dp"
@@ -49,5 +94,17 @@
         app:layout_constraintEnd_toEndOf="@+id/center_table"
         app:layout_constraintStart_toStartOf="@+id/center_table"
         app:layout_constraintTop_toTopOf="@+id/center_table" />
+
+    <ImageButton
+        android:id="@+id/delete_choice"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:src="@android:drawable/ic_menu_delete"
+        android:tint="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@+id/navigation"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
