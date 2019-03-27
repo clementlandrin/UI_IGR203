@@ -5,4 +5,5 @@
     <string name="title_entree">Entree</string>
     <string name="title_dish">Dish</string>
     <string name="title_dessert">Dessert</string>
+    <string name="send_to_kitchen">Send to kitchen</string>
 </resources>

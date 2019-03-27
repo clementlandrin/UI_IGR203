@@ -1,5 +1,7 @@
 package com.example.ui_igr203;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -9,11 +11,14 @@ import androidx.annotation.NonNull;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.SpannableString;
 import android.text.style.TextAppearanceSpan;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -32,7 +37,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
 
     private ImageButton center_table;
     private View four_choice_menu;
-    private TextView choice;
+    private Button choice;
 
     private boolean started_from_center_table;
     private boolean four_choice_menu_was_displayed;
@@ -112,24 +117,28 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                     choice.setVisibility(View.INVISIBLE);
                     currentCategory = aperitifCategories;
                     setCategoryText(currentCategory);
+                    choice_selected = false;
                     return true;
                 case R.id.navigation_entree:
                     center_table.setColorFilter(getResources().getColor(R.color.entreeColor),PorterDuff.Mode.SRC_IN);
                     choice.setVisibility(View.INVISIBLE);
                     currentCategory = entreeCategories;
                     setCategoryText(currentCategory);
+                    choice_selected = false;
                     return true;
                 case R.id.navigation_dish:
                     center_table.setColorFilter(getResources().getColor(R.color.dishColor),PorterDuff.Mode.SRC_IN);
                     choice.setVisibility(View.INVISIBLE);
                     currentCategory = dishCategories;
                     setCategoryText(currentCategory);
+                    choice_selected = false;
                     return true;
                 case R.id.navigation_dessert:
                     center_table.setColorFilter(getResources().getColor(R.color.dessertColor),PorterDuff.Mode.SRC_IN);
                     choice.setVisibility(View.INVISIBLE);
                     currentCategory = dessertCategories;
                     setCategoryText(currentCategory);
+                    choice_selected = false;
                     return true;
             }
             return false;
@@ -155,6 +164,39 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
             return "";
         }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.send_to_kitchen:
+                Log.i("onOptionsItemSelected","send_to_kitchen clicked");
+                new AlertDialog.Builder(TableActivity.this)
+                        .setTitle("Confirm Order")
+                        .setMessage("Are you sure?")
+                        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // send to kitchen
+                    Intent intent = new Intent(TableActivity.this, RestaurantRoomActivity.class);
+                    startActivity(intent);
+                }
+            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Cancel
+                    }
+                }).show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.orderingmenu, menu);
+        return true;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -236,6 +278,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         category2.setOnClickListener(this);
         category3.setOnClickListener(this);
         category4.setOnClickListener(this);
+        choice.setOnClickListener(this);
 
         setCategoryText(currentCategory);
 
@@ -287,7 +330,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                 four_choice_menu.setVisibility(View.INVISIBLE);
                 break;
             case R.id.category2:
-                if(currentCategory.size()>0)
+                if(currentCategory.size()>1)
                 {
                     choice.setText(category2.getText());
                     choice.setVisibility(View.VISIBLE);
@@ -296,7 +339,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                 four_choice_menu.setVisibility(View.INVISIBLE);
                 break;
             case R.id.category3:
-                if(currentCategory.size()>0)
+                if(currentCategory.size()>2)
                 {
                     choice.setText(category3.getText());
                     choice.setVisibility(View.VISIBLE);
@@ -305,13 +348,17 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                 four_choice_menu.setVisibility(View.INVISIBLE);
                 break;
             case R.id.category4:
-                if(currentCategory.size()>0)
+                if(currentCategory.size()>3)
                 {
                     choice.setText(category4.getText());
                     choice.setVisibility(View.VISIBLE);
                     choice_selected = true;
                 }
                 four_choice_menu.setVisibility(View.INVISIBLE);
+                break;
+            case R.id.choice:
+                choice_selected = false;
+                choice.setVisibility(View.INVISIBLE);
                 break;
         }
     }

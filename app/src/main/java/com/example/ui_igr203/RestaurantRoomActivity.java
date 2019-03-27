@@ -62,7 +62,9 @@ public class RestaurantRoomActivity extends AppCompatActivity implements View.On
             case R.id.button3:
             case R.id.button4:
             case R.id.button5:
+            case R.id.button6:
                 Intent intent = new Intent(this, TableActivity.class);
+                intent.putExtra("table_id", 0); // send here the number of the table that has been clicked.
                 startActivity(intent);
 
 
