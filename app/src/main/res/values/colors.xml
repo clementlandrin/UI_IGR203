@@ -7,4 +7,5 @@
     <color name="entreeColor">#138D00</color>
     <color name="dishColor">#FF8E4A</color>
     <color name="dessertColor">#442A00</color>
+    <color name="tableLabelColor">#FFFFFF</color>
 </resources>

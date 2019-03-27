@@ -1,5 +1,6 @@
 package com.example.ui_igr203;
 
+import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -33,7 +34,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TableActivity extends AppCompatActivity implements View.OnClickListener {
+public class TableActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
 
     private ImageButton center_table;
     private View four_choice_menu;
@@ -262,6 +263,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         center_table.setOnClickListener(this);
 
         choice = findViewById(R.id.choice);
+        choice.setOnTouchListener(this);
         choice.setVisibility(View.INVISIBLE);
         choice.setTextColor(Color.WHITE);
         choice.setBackgroundColor(Color.BLACK);
@@ -311,6 +313,14 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        if(getIntent().getStringExtra("table_id") != null)
+        {
+            actionBar.setTitle(getResources().getString(R.string.title_activity_table)+getIntent().getStringExtra("table_id"));
+        }
+        else
+        {
+            actionBar.setTitle(getResources().getString(R.string.title_activity_table)+getResources().getString(R.string.table_id_unkwnown));
+        }
     }
 
     @Override
@@ -465,5 +475,18 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
             }
         }
         return super.dispatchTouchEvent(event);
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN && choice_selected) {
+            ClipData data = ClipData.newPlainText("", "");
+            View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(choice);
+            choice.startDrag(data, shadowBuilder, choice, 0);
+            choice.setVisibility(View.INVISIBLE);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
