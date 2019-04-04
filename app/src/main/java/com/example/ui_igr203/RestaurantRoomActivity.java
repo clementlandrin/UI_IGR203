@@ -34,7 +34,7 @@ public class RestaurantRoomActivity extends AppCompatActivity implements View.On
         try {
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new
                     File(getFilesDir()+File.separator+"menu.txt")));
-            bufferedWriter.write("beer,wine,strong alcohols'salad,hot,cheese,others'meet,fish,vegetarian,cold'hot drinks,ice cream,cakes,fruits");
+            bufferedWriter.write("bières,vins,alcool forts'à partager,charcuterie,salades,others'boeuf,boeuf hâché,burgers,poissons'fromages,desserts,glaces,café");
             bufferedWriter.close();
         } catch (IOException e) {
             e.printStackTrace();

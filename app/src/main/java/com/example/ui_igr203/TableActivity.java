@@ -67,18 +67,18 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
     List<String> beers;
     List<String> wines;
     List<String> strongAlcohols;
-    List<String> salads;
-    List<String> hot ;
-    List<String> cheese;
-    List<String> others;
-    List<String> meets;
-    List<String> fishes;
-    List<String> vegetarians;
-    List<String> cold;
-    List<String> hotDrinks;
-    List<String> icecreams;
-    List<String> cakes;
-    List<String> fruits;
+    List<String> aPartager;
+    List<String> charcuterie;
+    List<String> salades;
+    List<String> autres;
+    List<String> boeuf;
+    List<String> boeufHache;
+    List<String> burgers;
+    List<String> poissons;
+    List<String> fromages;
+    List<String> dessert;
+    List<String> glaces;
+    List<String> cafe;
 
     private BottomNavigationView navigation;
     private List<String> aperitifCategories;
@@ -272,70 +272,71 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
             dishCategories = new ArrayList<>();
             dessertCategories = new ArrayList<>();
             beers = new ArrayList<>();
-            beers.add("Yellow");
-            beers.add("Amber");
-            beers.add("Brown");
-            beers.add("Black");
+            beers.add("Blanche");
+            beers.add("Blonde");
+            beers.add("Ambrée");
+            beers.add("Brune");
             wines = new ArrayList<>();
-            wines.add("Red");
+            wines.add("Rouge");
             wines.add("Rosé");
-            wines.add("White");
+            wines.add("Blanc");
             strongAlcohols = new ArrayList<>();
             strongAlcohols.add("Cognac");
             strongAlcohols.add("Liqueur");
             strongAlcohols.add("Whisky");
-            strongAlcohols.add("Rum");
-            salads = new ArrayList<>();
-            salads.add("Vegetarian");
-            salads.add("Liqueur");
-            salads.add("Whisky");
-            salads.add("Rum");
-            hot = new ArrayList<>();
-            hot.add("Goat cheese toast");
-            hot.add("Noodles");
-            hot.add("Grilled salmon");
-            hot.add("Honey baked ham");
-            cheese = new ArrayList<>();
-            cheese.add("Item 1");
-            cheese.add("Item 2");
-            cheese.add("Item 3");
-            others = new ArrayList<>();
-            others.add("Item 1");
-            others.add("Item 2");
-            others.add("Item 3");
-            others.add("Item 4");
-            meets = new ArrayList<>();
-            meets.add("Beef");
-            meets.add("Poultry");
-            meets.add("Pork");
-            fishes = new ArrayList<>();
-            fishes.add("Salmon");
-            fishes.add("Cab");
-            fishes.add("Seafood");
-            fishes.add("Mussels");
-            vegetarians = new ArrayList<>();
-            vegetarians.add("Item 1");
-            vegetarians.add("Item 2");
-            cold = new ArrayList<>();
-            cold.add("Item 1");
-            cold.add("Item 2");
-            cold.add("Item 3");
-            cold.add("Item 4");
-            hotDrinks = new ArrayList<>();
-            hotDrinks.add("Coffee");
-            hotDrinks.add("Green thea");
-            hotDrinks.add("Black tea");
-            icecreams = new ArrayList<>();
-            icecreams.add("Hard ice cream");
-            icecreams.add("French ice cream");
-            icecreams.add("Soft ice creram");
-            cakes = new ArrayList<>();
-            cakes.add("Chocolate");
-            cakes.add("Citrus Meringue Pie");
-            cakes.add("Cheese cake");
-            fruits = new ArrayList<>();
-            fruits.add("Ananas");
-            fruits.add("Fruits salad");
+            strongAlcohols.add("Rhum");
+            aPartager = new ArrayList<>();
+            aPartager.add("Planche de charcuterie");
+            aPartager.add("Planche mixte");
+            aPartager.add("Duo de rillettes");
+            charcuterie = new ArrayList<>();
+            charcuterie.add("Rosette de Lyon");
+            charcuterie.add("Rillettes");
+            charcuterie.add("Terrine de campagne");
+            charcuterie.add("Pâté en croûte");
+            salades = new ArrayList<>();
+            salades.add("Du soleil");
+            salades.add("Chèvre chaud");
+            autres = new ArrayList<>();
+            autres.add("Fromage blanc");
+            autres.add("Oeuf poché");
+            boeuf = new ArrayList<>();
+            boeuf.add("Côte");
+            boeuf.add("Onglet");
+            boeuf.add("Entrecôte");
+            boeuf.add("Mariné");
+            boeufHache = new ArrayList<>();
+            boeufHache.add("Super hâché");
+            boeufHache.add("Tartare");
+            boeufHache.add("Carpaccio");
+            boeufHache.add("Steak hâché");
+            burgers = new ArrayList<>();
+            burgers.add("Rustique");
+            burgers.add("Traditionnel");
+            burgers.add("Décalé");
+            burgers.add("Bon vivant");
+            poissons = new ArrayList<>();
+            poissons.add("Cabillaud");
+            poissons.add("Bar");
+            poissons.add("Saumon");
+            fromages = new ArrayList<>();
+            fromages.add("Cabécou");
+            fromages.add("Camembert");
+            fromages.add("Faisselle");
+            dessert = new ArrayList<>();
+            dessert.add("Tartare de fruits");
+            dessert.add("Ile flottante");
+            dessert.add("Mousse au chocolat");
+            dessert.add("Tarte aux pommes");
+            glaces = new ArrayList<>();
+            glaces.add("Liégeoises");
+            glaces.add("Sorbert");
+            glaces.add("Griotte");
+            glaces.add("Petite maison");
+            cafe = new ArrayList<>();
+            cafe.add("Douceur");
+            cafe.add("Gourmand");
+            cafe.add("Paille café");
 
             for (int i = 0; i < split.length; i++) {
                 String[] splitTmp = split[i].split(",");
@@ -478,15 +479,15 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                                 setCategoryText(currentCategory);
                                 break;
                             case "Entree":
-                                currentCategory = salads;
+                                currentCategory = aPartager;
                                 setCategoryText(currentCategory);
                                 break;
                             case "Dish":
-                                currentCategory = meets;
+                                currentCategory = boeuf;
                                 setCategoryText(currentCategory);
                                 break;
                             case "Dessert":
-                                currentCategory = hotDrinks;
+                                currentCategory = fromages;
                                 setCategoryText(currentCategory);
                                 break;
                         }
@@ -529,15 +530,15 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                                 setCategoryText(currentCategory);
                                 break;
                             case "Entree":
-                                currentCategory = hot;
+                                currentCategory = charcuterie;
                                 setCategoryText(currentCategory);
                                 break;
                             case "Dish":
-                                currentCategory = fishes;
+                                currentCategory = boeufHache;
                                 setCategoryText(currentCategory);
                                 break;
                             case "Dessert":
-                                currentCategory = icecreams;
+                                currentCategory = dessert;
                                 setCategoryText(currentCategory);
                                 break;
                         }
@@ -580,15 +581,15 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                                 setCategoryText(currentCategory);
                                 break;
                             case "Entree":
-                                currentCategory = cheese;
+                                currentCategory = salades;
                                 setCategoryText(currentCategory);
                                 break;
                             case "Dish":
-                                currentCategory = vegetarians;
+                                currentCategory = burgers;
                                 setCategoryText(currentCategory);
                                 break;
                             case "Dessert":
-                                currentCategory = cakes;
+                                currentCategory = glaces;
                                 setCategoryText(currentCategory);
                                 break;
                         }
@@ -627,15 +628,15 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                         switch (currentStep)
                         {
                             case "Entree":
-                                currentCategory = others;
+                                currentCategory = autres;
                                 setCategoryText(currentCategory);
                                 break;
                             case "Dish":
-                                currentCategory = cold;
+                                currentCategory = poissons;
                                 setCategoryText(currentCategory);
                                 break;
                             case "Dessert":
-                                currentCategory = fruits;
+                                currentCategory = cafe;
                                 setCategoryText(currentCategory);
                                 break;
                         }
