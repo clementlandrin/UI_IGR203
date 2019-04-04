@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">UI_IGR203</string>
+    <string name="app_name">Enhanced Waiter</string>
     <string name="title_activity_table">Table n°</string>
     <string name="title_aperitif">Aperitif</string>
     <string name="title_entree">Entree</string>

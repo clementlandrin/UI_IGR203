@@ -234,15 +234,15 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         switch (item.getItemId()) {
             case R.id.send_to_kitchen:
                 new AlertDialog.Builder(TableActivity.this)
-                        .setTitle("Send to kitchen ")
-                        .setMessage("Are you sure?")
-                        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                        .setTitle("Envoyer en cuisine")
+                        .setMessage("- Plat 1\n- Plat 2\n.\n.\n.")
+                        .setPositiveButton("Confirmer", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // send to kitchen
                                 Intent intent = new Intent(TableActivity.this, RestaurantRoomActivity.class);
                                 startActivity(intent);
                             }
-                        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        }).setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Cancel
