@@ -45,18 +45,37 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
     private View four_choice_menu;
     private Button choice;
 
+    private View startedFromChoicesButton;
     private float initial_choice_x;
     private float initial_choice_y;
 
     private boolean started_from_center_table;
     private boolean four_choice_menu_was_displayed;
     private boolean choice_selected;
+    private boolean category_choice_selected;
     private boolean dragging;
 
     private Button category1;
     private Button category2;
     private Button category3;
     private Button category4;
+
+    List<String> beers;
+    List<String> wines;
+    List<String> strongAlcohols;
+    List<String> aPartager;
+    List<String> charcuterie;
+    List<String> salades;
+    List<String> autres;
+    List<String> boeuf;
+    List<String> boeufHache;
+    List<String> burgers;
+    List<String> poissons;
+    List<String> fromages;
+    List<String> dessert;
+    List<String> glaces;
+    List<String> cafe;
+
     private BottomNavigationView navigation;
     List<String> aperitifCategories;
     List<String> entreeCategories;
@@ -207,15 +226,15 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         switch (item.getItemId()) {
             case R.id.send_to_kitchen:
                 new AlertDialog.Builder(TableActivity.this)
-                        .setTitle("Send to kitchen ")
-                        .setMessage("Are you sure?")
-                        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                        .setTitle("Envoyer en cuisine")
+                        .setMessage("- Plat 1\n- Plat 2\n.\n.\n.")
+                        .setPositiveButton("Confirmer", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // send to kitchen
                                 Intent intent = new Intent(TableActivity.this, RestaurantRoomActivity.class);
                                 startActivity(intent);
                             }
-                        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        }).setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Cancel
@@ -244,6 +263,72 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
             entreeCategories = new ArrayList<>();
             dishCategories = new ArrayList<>();
             dessertCategories = new ArrayList<>();
+            beers = new ArrayList<>();
+            beers.add("Blanche");
+            beers.add("Blonde");
+            beers.add("Ambrée");
+            beers.add("Brune");
+            wines = new ArrayList<>();
+            wines.add("Rouge");
+            wines.add("Rosé");
+            wines.add("Blanc");
+            strongAlcohols = new ArrayList<>();
+            strongAlcohols.add("Cognac");
+            strongAlcohols.add("Liqueur");
+            strongAlcohols.add("Whisky");
+            strongAlcohols.add("Rhum");
+            aPartager = new ArrayList<>();
+            aPartager.add("Planche de charcuterie");
+            aPartager.add("Planche mixte");
+            aPartager.add("Duo de rillettes");
+            charcuterie = new ArrayList<>();
+            charcuterie.add("Rosette de Lyon");
+            charcuterie.add("Rillettes");
+            charcuterie.add("Terrine de campagne");
+            charcuterie.add("Pâté en croûte");
+            salades = new ArrayList<>();
+            salades.add("Du soleil");
+            salades.add("Chèvre chaud");
+            autres = new ArrayList<>();
+            autres.add("Fromage blanc");
+            autres.add("Oeuf poché");
+            boeuf = new ArrayList<>();
+            boeuf.add("Côte");
+            boeuf.add("Onglet");
+            boeuf.add("Entrecôte");
+            boeuf.add("Mariné");
+            boeufHache = new ArrayList<>();
+            boeufHache.add("Super hâché");
+            boeufHache.add("Tartare");
+            boeufHache.add("Carpaccio");
+            boeufHache.add("Steak hâché");
+            burgers = new ArrayList<>();
+            burgers.add("Rustique");
+            burgers.add("Traditionnel");
+            burgers.add("Décalé");
+            burgers.add("Bon vivant");
+            poissons = new ArrayList<>();
+            poissons.add("Cabillaud");
+            poissons.add("Bar");
+            poissons.add("Saumon");
+            fromages = new ArrayList<>();
+            fromages.add("Cabécou");
+            fromages.add("Camembert");
+            fromages.add("Faisselle");
+            dessert = new ArrayList<>();
+            dessert.add("Tartare de fruits");
+            dessert.add("Ile flottante");
+            dessert.add("Mousse au chocolat");
+            dessert.add("Tarte aux pommes");
+            glaces = new ArrayList<>();
+            glaces.add("Liégeoises");
+            glaces.add("Sorbert");
+            glaces.add("Griotte");
+            glaces.add("Petite maison");
+            cafe = new ArrayList<>();
+            cafe.add("Douceur");
+            cafe.add("Gourmand");
+            cafe.add("Paille café");
 
             for (int i = 0; i < split.length; i++) {
                 String[] splitTmp = split[i].split(",");
@@ -282,6 +367,8 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         currentCategory = aperitifCategories;
         currentColor = getResources().getColor(R.color.aperitifColor);
 
+        startedFromChoicesButton = null;
+
         setContentView(R.layout.activity_table);
 
         chair_number = getIntent().getIntExtra("chair_number", 0);
@@ -294,6 +381,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         four_choice_menu_was_displayed = false;
         started_from_center_table = false;
         choice_selected = false;
+        category_choice_selected = false;
         findViewById(R.id.delete_choice).setVisibility(View.INVISIBLE);
         findViewById(R.id.delete_choice).setOnClickListener(this);
         dragging = false;
@@ -367,52 +455,222 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        // useless for now as dispatchTouchMethod handle touch input
-        switch (v.getId()) {
-            case R.id.center_table:
-                break;
+
+    private void trigerChoice(View v)
+    {
+        switch(v.getId())
+        {
             case R.id.category1:
                 if (currentCategory.size() > 0) {
-                    choice.setText(category1.getText());
-                    choice.setVisibility(View.VISIBLE);
-                    choice_selected = true;
-                    findViewById(R.id.delete_choice).setVisibility(View.VISIBLE);
+                    if(!category_choice_selected) {
+                        switch (currentStep)
+                        {
+                            case "Aperitif":
+                                currentCategory = beers;
+                                setCategoryText(currentCategory);
+                                break;
+                            case "Entree":
+                                currentCategory = aPartager;
+                                setCategoryText(currentCategory);
+                                break;
+                            case "Dish":
+                                currentCategory = boeuf;
+                                setCategoryText(currentCategory);
+                                break;
+                            case "Dessert":
+                                currentCategory = fromages;
+                                setCategoryText(currentCategory);
+                                break;
+                        }
+                        category_choice_selected = true;
+                    }
+                    else
+                    {
+                        choice.setText(category1.getText());
+                        choice.setVisibility(View.VISIBLE);
+                        four_choice_menu.setVisibility(View.INVISIBLE);
+                        choice_selected = true;
+                        switch (currentStep)
+                        {
+                            case "Aperitif":
+                                currentCategory = aperitifCategories;
+                                break;
+                            case "Entree":
+                                currentCategory = entreeCategories;
+                                break;
+                            case "Dish":
+                                currentCategory = dishCategories;
+                                break;
+                            case "Dessert":
+                                currentCategory = dessertCategories;
+                                break;
+                        }
+                        findViewById(R.id.delete_choice).setVisibility(View.VISIBLE);
+                        category_choice_selected = false;
+                    }
                 }
-                four_choice_menu.setVisibility(View.INVISIBLE);
                 break;
             case R.id.category2:
                 if (currentCategory.size() > 1) {
-                    choice.setText(category2.getText());
-                    choice.setVisibility(View.VISIBLE);
-                    choice_selected = true;
-                    findViewById(R.id.delete_choice).setVisibility(View.VISIBLE);
+                    if(!category_choice_selected)
+                    {
+                        switch (currentStep)
+                        {
+                            case "Aperitif":
+                                currentCategory = wines;
+                                setCategoryText(currentCategory);
+                                break;
+                            case "Entree":
+                                currentCategory = charcuterie;
+                                setCategoryText(currentCategory);
+                                break;
+                            case "Dish":
+                                currentCategory = boeufHache;
+                                setCategoryText(currentCategory);
+                                break;
+                            case "Dessert":
+                                currentCategory = dessert;
+                                setCategoryText(currentCategory);
+                                break;
+                        }
+                        category_choice_selected = true;
+                    }
+                    else
+                    {
+                        choice.setText(category2.getText());
+                        choice.setVisibility(View.VISIBLE);
+                        choice_selected = true;
+                        switch (currentStep)
+                        {
+                            case "Aperitif":
+                                currentCategory = aperitifCategories;
+                                break;
+                            case "Entree":
+                                currentCategory = entreeCategories;
+                                break;
+                            case "Dish":
+                                currentCategory = dishCategories;
+                                break;
+                            case "Dessert":
+                                currentCategory = dessertCategories;
+                                break;
+                        }
+                        findViewById(R.id.delete_choice).setVisibility(View.VISIBLE);
+                        four_choice_menu.setVisibility(View.INVISIBLE);
+                        category_choice_selected = false;
+                    }
                 }
-                four_choice_menu.setVisibility(View.INVISIBLE);
                 break;
             case R.id.category3:
                 if (currentCategory.size() > 2) {
-                    choice.setText(category3.getText());
-                    choice.setVisibility(View.VISIBLE);
-                    choice_selected = true;
-                    findViewById(R.id.delete_choice).setVisibility(View.VISIBLE);
+                    if(!category_choice_selected)
+                    {
+                        switch (currentStep)
+                        {
+                            case "Aperitif":
+                                currentCategory = strongAlcohols;
+                                setCategoryText(currentCategory);
+                                break;
+                            case "Entree":
+                                currentCategory = salades;
+                                setCategoryText(currentCategory);
+                                break;
+                            case "Dish":
+                                currentCategory = burgers;
+                                setCategoryText(currentCategory);
+                                break;
+                            case "Dessert":
+                                currentCategory = glaces;
+                                setCategoryText(currentCategory);
+                                break;
+                        }
+                        category_choice_selected = true;
+                    }
+                    else
+                    {
+                        choice.setText(category3.getText());
+                        choice.setVisibility(View.VISIBLE);
+                        choice_selected = true;
+                        switch (currentStep)
+                        {
+                            case "Aperitif":
+                                currentCategory = aperitifCategories;
+                                break;
+                            case "Entree":
+                                currentCategory = entreeCategories;
+                                break;
+                            case "Dish":
+                                currentCategory = dishCategories;
+                                break;
+                            case "Dessert":
+                                currentCategory = dessertCategories;
+                                break;
+                        }
+                        findViewById(R.id.delete_choice).setVisibility(View.VISIBLE);
+                        four_choice_menu.setVisibility(View.INVISIBLE);
+                        category_choice_selected = false;
+                    }
                 }
-                four_choice_menu.setVisibility(View.INVISIBLE);
                 break;
             case R.id.category4:
                 if (currentCategory.size() > 3) {
-                    choice.setText(category4.getText());
-                    choice.setVisibility(View.VISIBLE);
-                    choice_selected = true;
-                    findViewById(R.id.delete_choice).setVisibility(View.VISIBLE);
+                    if(!category_choice_selected)
+                    {
+                        switch (currentStep)
+                        {
+                            case "Entree":
+                                currentCategory = autres;
+                                setCategoryText(currentCategory);
+                                break;
+                            case "Dish":
+                                currentCategory = poissons;
+                                setCategoryText(currentCategory);
+                                break;
+                            case "Dessert":
+                                currentCategory = cafe;
+                                setCategoryText(currentCategory);
+                                break;
+                        }
+                        category_choice_selected = true;
+                    }
+                    else
+                    {
+                        choice.setText(category4.getText());
+                        choice.setVisibility(View.VISIBLE);
+                        choice_selected = true;
+                        switch (currentStep)
+                        {
+                            case "Aperitif":
+                                currentCategory = aperitifCategories;
+                                break;
+                            case "Entree":
+                                currentCategory = entreeCategories;
+                                break;
+                            case "Dish":
+                                currentCategory = dishCategories;
+                                break;
+                            case "Dessert":
+                                currentCategory = dessertCategories;
+                                break;
+                        }
+                        findViewById(R.id.delete_choice).setVisibility(View.VISIBLE);
+                        four_choice_menu.setVisibility(View.INVISIBLE);
+                        category_choice_selected = false;
+                    }
                 }
-                four_choice_menu.setVisibility(View.INVISIBLE);
+                break;
+        }
+    }
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.center_table:
                 break;
             case R.id.delete_choice:
                 choice.setVisibility(View.INVISIBLE);
                 findViewById(R.id.delete_choice).setVisibility(View.INVISIBLE);
                 choice_selected = false;
+                category_choice_selected = false;
             case R.id.chair_1:
                 if(!choice_selected && !dragging)
                 {
@@ -469,7 +727,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         return false;
     }
 
-    private boolean clickOnReleaseButton(float x, float y) {
+    private boolean clickOnReleaseButton(float x, float y, boolean trigger) {
         int[] location = new int[2];
         float density = getResources().getDisplayMetrics().density;
         center_table.getLocationOnScreen(location);
@@ -480,16 +738,28 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
             return false;
         }
         if (x < centerX && y < centerY) {
-            category1.performClick();
+            if(trigger)
+            {
+                trigerChoice(category1);
+            }
             return true;
         } else if (x > centerX && y < centerY) {
-            category2.performClick();
+            if(trigger)
+            {
+                trigerChoice(category2);
+            }
             return true;
         } else if (x > centerX && y > centerY) {
-            category3.performClick();
+            if(trigger)
+            {
+                trigerChoice(category3);
+            }
             return true;
         } else if (x < centerX && y > centerY) {
-            category4.performClick();
+            if(trigger)
+            {
+                trigerChoice(category4);
+            }
             return true;
         }
         return false;
@@ -506,6 +776,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                     four_choice_menu_was_displayed = (four_choice_menu.getVisibility() == View.VISIBLE);
                     if (checkIsOnView(event.getX(), event.getY(), center_table) && four_choice_menu != null) {
                         started_from_center_table = true;
+                        setCategoryText(currentCategory);
                         four_choice_menu.setVisibility(View.VISIBLE);
                     } else {
                         started_from_center_table = false;
@@ -527,11 +798,10 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                 Log.i("onTouchEvent", "ACTION_UP");
                 if (!choice_selected) {
                     if (!checkIsOnView(event.getX(), event.getY(), center_table) && four_choice_menu != null) {
-                        if (started_from_center_table) {
-                            if (clickOnReleaseButton(event.getX(), event.getY())) {
-                                four_choice_menu.setVisibility(View.INVISIBLE);
+                        //if (started_from_center_table) {
+                            if (clickOnReleaseButton(event.getX(), event.getY(), true)) {
                             }
-                        }
+                        //}
                     } else if (checkIsOnView(event.getX(), event.getY(), center_table) && four_choice_menu_was_displayed && four_choice_menu != null) {
                         four_choice_menu.setVisibility(View.INVISIBLE);
                     }
