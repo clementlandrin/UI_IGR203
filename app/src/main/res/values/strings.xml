@@ -3,8 +3,8 @@
     <string name="title_activity_table">Table n°</string>
     <string name="title_aperitif">Aperitif</string>
     <string name="title_entree">Entree</string>
-    <string name="title_dish">Dish</string>
+    <string name="title_dish">Plat</string>
     <string name="title_dessert">Dessert</string>
-    <string name="send_to_kitchen">Send to kitchen</string>
+    <string name="send_to_kitchen">Envoyer en cuisine</string>
     <string name="table_id_unkwnown">unknown</string>
 </resources>

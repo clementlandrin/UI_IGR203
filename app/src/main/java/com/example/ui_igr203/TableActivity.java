@@ -825,10 +825,10 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                 Log.i("onTouchEvent", "ACTION_UP");
                 if (!choice_selected) {
                     if (!checkIsOnView(event.getX(), event.getY(), center_table) && four_choice_menu != null) {
-                        //if (started_from_center_table) {
-                            if (clickOnReleaseButton(event.getX(), event.getY(), true)) {
-                            }
-                        //}
+                        if (four_choice_menu.getVisibility() == View.VISIBLE)
+                        {
+                            clickOnReleaseButton(event.getX(), event.getY(), true);
+                        }
                     } else if (checkIsOnView(event.getX(), event.getY(), center_table) && four_choice_menu_was_displayed && four_choice_menu != null) {
                         four_choice_menu.setVisibility(View.INVISIBLE);
                     }
