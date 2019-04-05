@@ -1,37 +1,29 @@
 package com.example.ui_igr203;
 
-import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.provider.ContactsContract;
 import android.text.SpannableString;
 import android.text.style.TextAppearanceSpan;
 import android.util.Log;
-import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -482,7 +474,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                                 currentCategory = aPartager;
                                 setCategoryText(currentCategory);
                                 break;
-                            case "Dish":
+                            case "Plat":
                                 currentCategory = boeuf;
                                 setCategoryText(currentCategory);
                                 break;
@@ -507,7 +499,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                             case "Entree":
                                 currentCategory = entreeCategories;
                                 break;
-                            case "Dish":
+                            case "Plat":
                                 currentCategory = dishCategories;
                                 break;
                             case "Dessert":
@@ -533,7 +525,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                                 currentCategory = charcuterie;
                                 setCategoryText(currentCategory);
                                 break;
-                            case "Dish":
+                            case "Plat":
                                 currentCategory = boeufHache;
                                 setCategoryText(currentCategory);
                                 break;
@@ -557,7 +549,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                             case "Entree":
                                 currentCategory = entreeCategories;
                                 break;
-                            case "Dish":
+                            case "Plat":
                                 currentCategory = dishCategories;
                                 break;
                             case "Dessert":
@@ -584,7 +576,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                                 currentCategory = salades;
                                 setCategoryText(currentCategory);
                                 break;
-                            case "Dish":
+                            case "Plat":
                                 currentCategory = burgers;
                                 setCategoryText(currentCategory);
                                 break;
@@ -608,7 +600,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                             case "Entree":
                                 currentCategory = entreeCategories;
                                 break;
-                            case "Dish":
+                            case "Plat":
                                 currentCategory = dishCategories;
                                 break;
                             case "Dessert":
@@ -631,7 +623,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                                 currentCategory = autres;
                                 setCategoryText(currentCategory);
                                 break;
-                            case "Dish":
+                            case "Plat":
                                 currentCategory = poissons;
                                 setCategoryText(currentCategory);
                                 break;
@@ -655,7 +647,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                             case "Entree":
                                 currentCategory = entreeCategories;
                                 break;
-                            case "Dish":
+                            case "Plat":
                                 currentCategory = dishCategories;
                                 break;
                             case "Dessert":
@@ -736,6 +728,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
             e.printStackTrace();
         }
     }
+
     private boolean checkIsOnView(float x, float y, View view) {
         float density = getResources().getDisplayMetrics().density;
 
