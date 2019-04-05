@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -16,7 +15,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.provider.ContactsContract;
 import android.text.SpannableString;
 import android.text.style.TextAppearanceSpan;
 import android.util.Log;
@@ -34,10 +32,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,12 +58,12 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
     private Button category3;
     private Button category4;
     private BottomNavigationView navigation;
-    private List<String> aperitifCategories;
-    private List<String> entreeCategories;
-    private List<String> dishCategories;
-    private List<String> dessertCategories;
-    private String currentStep;
-    private List<String> currentCategory;
+    List<String> aperitifCategories;
+    List<String> entreeCategories;
+    List<String> dishCategories;
+    List<String> dessertCategories;
+
+    List<String> currentCategory;
     private int currentColor;
 
     private void setCategoryText(List<String> categories) {
@@ -131,7 +127,6 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                     center_table.setColorFilter(getResources().getColor(R.color.aperitifColor), PorterDuff.Mode.SRC_IN);
                     choice.setVisibility(View.INVISIBLE);
                     currentCategory = aperitifCategories;
-                    currentStep = getResources().getString(R.string.title_aperitif);
                     currentColor = getResources().getColor(R.color.aperitifColor);
                     setCategoryText(currentCategory);
                     choice_selected = false;
@@ -142,7 +137,6 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                     center_table.setColorFilter(getResources().getColor(R.color.entreeColor), PorterDuff.Mode.SRC_IN);
                     choice.setVisibility(View.INVISIBLE);
                     currentCategory = entreeCategories;
-                    currentStep = getResources().getString(R.string.title_entree);
                     currentColor = getResources().getColor(R.color.entreeColor);
                     setCategoryText(currentCategory);
                     choice_selected = false;
@@ -153,7 +147,6 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                     center_table.setColorFilter(getResources().getColor(R.color.dishColor), PorterDuff.Mode.SRC_IN);
                     choice.setVisibility(View.INVISIBLE);
                     currentCategory = dishCategories;
-                    currentStep = getResources().getString(R.string.title_dish);
                     currentColor = getResources().getColor(R.color.dishColor);
                     setCategoryText(currentCategory);
                     choice_selected = false;
@@ -164,7 +157,6 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                     center_table.setColorFilter(getResources().getColor(R.color.dessertColor), PorterDuff.Mode.SRC_IN);
                     choice.setVisibility(View.INVISIBLE);
                     currentCategory = dessertCategories;
-                    currentStep = getResources().getString(R.string.title_dessert);
                     currentColor = getResources().getColor(R.color.dessertColor);
                     setCategoryText(currentCategory);
                     choice_selected = false;
@@ -288,7 +280,6 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
             }
         }
         currentCategory = aperitifCategories;
-        currentStep = getResources().getString(R.string.title_aperitif);
         currentColor = getResources().getColor(R.color.aperitifColor);
 
         setContentView(R.layout.activity_table);
@@ -426,15 +417,13 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                 if(!choice_selected && !dragging)
                 {
                     ((ImageView)findViewById(R.id.chair_1)).setColorFilter(Color.BLACK);
-                    discardChoosenItem(1);
-                    // TODO delete the relevant item of the relevant file
+                    // TODO undo the order for this chair for this step (aperitif, entree, dish, dessert)
                 }
                 break;
             case R.id.chair_2:
                 if(!choice_selected && !dragging)
                 {
                     ((ImageView)findViewById(R.id.chair_2)).setColorFilter(Color.BLACK);
-                    discardChoosenItem(2);
                     // TODO undo the order for this chair for this step (aperitif, entree, dish, dessert)
                 }
                 break;
@@ -442,7 +431,6 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                 if(!choice_selected && !dragging)
                 {
                     ((ImageView)findViewById(R.id.chair_3)).setColorFilter(Color.BLACK);
-                    discardChoosenItem(3);
                     // TODO undo the order for this chair for this step (aperitif, entree, dish, dessert)
                 }
                 break;
@@ -450,34 +438,12 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                 if(!choice_selected && !dragging)
                 {
                     ((ImageView)findViewById(R.id.chair_4)).setColorFilter(Color.BLACK);
-                    discardChoosenItem(4);
                     // TODO undo the order for this chair for this step (aperitif, entree, dish, dessert)
                 }
                 break;
         }
     }
 
-    private void discardChoosenItem(int chair_id)
-    {
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(new
-                    File(getFilesDir() + File.separator + "table-"+getIntent().getIntExtra("table_id",0)+"_chair-"+Integer.toString(chair_id)+".txt")));
-            String read;
-            StringBuilder builder = new StringBuilder("");
-
-            while ((read = bufferedReader.readLine()) != null) {
-                builder.append(read);
-            }
-            Log.d("Output", builder.toString());
-            bufferedReader.close();
-            if(builder.toString().contains(currentStep+":"))
-            {
-                //TODO delete currentStep+":"+choosen_item then rewrite the file
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     private boolean checkIsOnView(float x, float y, View view) {
         float density = getResources().getDisplayMetrics().density;
 
@@ -574,15 +540,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                     int chairId = releaseDropOnChair(event.getX(), event.getY());
                     Log.i("releaseDropOnChair", "result : " + Integer.toString(chairId));
                     if (chairId != 0) {
-                        //TODO add the choice to the order for the good person, for now added in a specific file for this chair of this table.
-                        try {
-                            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new
-                                    File(getFilesDir()+File.separator+"table-"+getIntent().getIntExtra("table_id",0)+"_chair-"+Integer.toString(chairId)+".txt")));
-                            bufferedWriter.write(currentStep+":"+choice.getText().toString()+",");
-                            bufferedWriter.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        //TODO add the choice to the order for the good person
                         switch(chairId)
                         {
                             case 1:
