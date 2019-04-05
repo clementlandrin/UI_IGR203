@@ -148,6 +148,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                     choice_selected = false;
                     findViewById(R.id.delete_choice).setVisibility(View.INVISIBLE);
                     clearChairColor();
+                    category_choice_selected = false;
                     return true;
                 case R.id.navigation_entree:
                     center_table.setColorFilter(getResources().getColor(R.color.entreeColor), PorterDuff.Mode.SRC_IN);
@@ -159,6 +160,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                     choice_selected = false;
                     findViewById(R.id.delete_choice).setVisibility(View.INVISIBLE);
                     clearChairColor();
+                    category_choice_selected = false;
                     return true;
                 case R.id.navigation_dish:
                     center_table.setColorFilter(getResources().getColor(R.color.dishColor), PorterDuff.Mode.SRC_IN);
@@ -170,6 +172,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                     choice_selected = false;
                     findViewById(R.id.delete_choice).setVisibility(View.INVISIBLE);
                     clearChairColor();
+                    category_choice_selected = false;
                     return true;
                 case R.id.navigation_dessert:
                     center_table.setColorFilter(getResources().getColor(R.color.dessertColor), PorterDuff.Mode.SRC_IN);
@@ -181,6 +184,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                     choice_selected = false;
                     findViewById(R.id.delete_choice).setVisibility(View.INVISIBLE);
                     clearChairColor();
+                    category_choice_selected = false;
                     return true;
             }
             return false;
@@ -831,6 +835,25 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                         }
                     } else if (checkIsOnView(event.getX(), event.getY(), center_table) && four_choice_menu_was_displayed && four_choice_menu != null) {
                         four_choice_menu.setVisibility(View.INVISIBLE);
+                        choice_selected = false;
+                        category_choice_selected = false;
+                        switch (currentStep)
+                        {
+                            case "Aperitif":
+                                currentCategory = aperitifCategories;
+                                break;
+                            case "Entree":
+                                currentCategory = entreeCategories;
+                                break;
+                            case "Plat":
+                                currentCategory = dishCategories;
+                                break;
+                            case "Dessert":
+                                currentCategory = dessertCategories;
+                                setCategoryText(currentCategory);
+                                break;
+                        }
+                        setCategoryText(currentCategory);
                     }
                 } else if (dragging) {
                     Log.i("onTouch", "start drop");
