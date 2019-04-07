@@ -8,14 +8,15 @@ public class Step {
 
     private List<Category> categoryList;
 
-    public String getName()
-    {
-        return this.name;
-    }
     public Step(String name)
     {
         this.name = name;
         this.categoryList = new ArrayList<>();
+    }
+
+    public String getName()
+    {
+        return this.name;
     }
 
     public void addCategory(Category category)

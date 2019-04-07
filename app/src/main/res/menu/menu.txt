@@ -1,0 +1,73 @@
+##aperitifs
+#bières
+blanche
+blonde
+brune
+ambrée
+#vins
+rouge
+rosé
+blanc
+#alcool forts
+cognac
+liqueur
+rhum
+whisky
+
+##entrées
+#à partager
+planche de charcuterie
+planche mixte
+duo de rillettes
+#charcuterie
+rosette de lyon
+rillettes
+terrine de campagne
+pâté en croûte
+#salades
+du soleil
+chèvre chaud
+#autres
+fromage blanc
+oeuf poché
+
+##plats
+#boeuf
+côte
+onglet
+entrecôte
+mariné
+#boeuf haché
+super hâché
+tartare
+carpaccio
+steak hâché
+#poisson
+carbillaud
+bar
+saumon
+#burger
+rustique
+traditionnel
+décalé
+bon vivant
+
+##desserts
+#fromages
+cabéou
+camembert
+faisselle
+#desserts
+tartare de fruits
+ile flottante
+mousse au chocolat
+tarte aux pommes
+#glaces
+liégeoises
+sorbet
+griotte
+petite maison
+#café
+douceur
+gourmand
+paille café

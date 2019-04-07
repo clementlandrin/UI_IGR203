@@ -259,72 +259,88 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
 
         if (split.length != 0) {
             Log.i("Set category from file", "size is not 0");
+
             aperitifCategories = new ArrayList<>();
             entreeCategories = new ArrayList<>();
             dishCategories = new ArrayList<>();
             dessertCategories = new ArrayList<>();
+
             beers = new ArrayList<>();
             beers.add("Blanche");
             beers.add("Blonde");
             beers.add("Ambrée");
             beers.add("Brune");
+
             wines = new ArrayList<>();
             wines.add("Rouge");
             wines.add("Rosé");
             wines.add("Blanc");
+
             strongAlcohols = new ArrayList<>();
             strongAlcohols.add("Cognac");
             strongAlcohols.add("Liqueur");
             strongAlcohols.add("Whisky");
             strongAlcohols.add("Rhum");
+
             aPartager = new ArrayList<>();
             aPartager.add("Planche de charcuterie");
             aPartager.add("Planche mixte");
             aPartager.add("Duo de rillettes");
+
             charcuterie = new ArrayList<>();
             charcuterie.add("Rosette de Lyon");
             charcuterie.add("Rillettes");
             charcuterie.add("Terrine de campagne");
             charcuterie.add("Pâté en croûte");
+
             salades = new ArrayList<>();
             salades.add("Du soleil");
             salades.add("Chèvre chaud");
+
             autres = new ArrayList<>();
             autres.add("Fromage blanc");
             autres.add("Oeuf poché");
+
             boeuf = new ArrayList<>();
             boeuf.add("Côte");
             boeuf.add("Onglet");
             boeuf.add("Entrecôte");
             boeuf.add("Mariné");
+
             boeufHache = new ArrayList<>();
             boeufHache.add("Super hâché");
             boeufHache.add("Tartare");
             boeufHache.add("Carpaccio");
             boeufHache.add("Steak hâché");
+
             burgers = new ArrayList<>();
             burgers.add("Rustique");
             burgers.add("Traditionnel");
             burgers.add("Décalé");
             burgers.add("Bon vivant");
+
             poissons = new ArrayList<>();
             poissons.add("Cabillaud");
             poissons.add("Bar");
             poissons.add("Saumon");
+
             fromages = new ArrayList<>();
             fromages.add("Cabécou");
             fromages.add("Camembert");
             fromages.add("Faisselle");
+
             dessert = new ArrayList<>();
             dessert.add("Tartare de fruits");
             dessert.add("Ile flottante");
             dessert.add("Mousse au chocolat");
             dessert.add("Tarte aux pommes");
+
             glaces = new ArrayList<>();
             glaces.add("Liégeoises");
             glaces.add("Sorbert");
             glaces.add("Griotte");
             glaces.add("Petite maison");
+
             cafe = new ArrayList<>();
             cafe.add("Douceur");
             cafe.add("Gourmand");
@@ -729,6 +745,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    // actually, it's check is on table
     private boolean checkIsOnView(float x, float y, View view) {
         float density = getResources().getDisplayMetrics().density;
 
