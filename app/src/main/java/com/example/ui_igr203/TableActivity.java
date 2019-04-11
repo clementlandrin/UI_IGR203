@@ -1,15 +1,12 @@
 package com.example.ui_igr203;
 
-import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -18,18 +15,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.style.TextAppearanceSpan;
 import android.util.Log;
-import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -151,6 +145,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                     choice_selected = false;
                     findViewById(R.id.delete_choice).setVisibility(View.INVISIBLE);
                     clearChairColor();
+                    category_choice_selected = false;
                     return true;
                 case R.id.navigation_entree:
                     center_table.setColorFilter(getResources().getColor(R.color.entreeColor), PorterDuff.Mode.SRC_IN);
@@ -161,6 +156,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                     choice_selected = false;
                     findViewById(R.id.delete_choice).setVisibility(View.INVISIBLE);
                     clearChairColor();
+                    category_choice_selected = false;
                     return true;
                 case R.id.navigation_dish:
                     center_table.setColorFilter(getResources().getColor(R.color.dishColor), PorterDuff.Mode.SRC_IN);
@@ -171,6 +167,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                     choice_selected = false;
                     findViewById(R.id.delete_choice).setVisibility(View.INVISIBLE);
                     clearChairColor();
+                    category_choice_selected = false;
                     return true;
                 case R.id.navigation_dessert:
                     center_table.setColorFilter(getResources().getColor(R.color.dessertColor), PorterDuff.Mode.SRC_IN);
@@ -181,6 +178,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                     choice_selected = false;
                     findViewById(R.id.delete_choice).setVisibility(View.INVISIBLE);
                     clearChairColor();
+                    category_choice_selected = false;
                     return true;
             }
             return false;
@@ -473,7 +471,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                                 currentCategory = aPartager;
                                 setCategoryText(currentCategory);
                                 break;
-                            case "Dish":
+                            case "Plat":
                                 currentCategory = boeuf;
                                 setCategoryText(currentCategory);
                                 break;
@@ -498,7 +496,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                             case "Entree":
                                 currentCategory = entreeCategories;
                                 break;
-                            case "Dish":
+                            case "Plat":
                                 currentCategory = dishCategories;
                                 break;
                             case "Dessert":
@@ -524,7 +522,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                                 currentCategory = charcuterie;
                                 setCategoryText(currentCategory);
                                 break;
-                            case "Dish":
+                            case "Plat":
                                 currentCategory = boeufHache;
                                 setCategoryText(currentCategory);
                                 break;
@@ -548,7 +546,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                             case "Entree":
                                 currentCategory = entreeCategories;
                                 break;
-                            case "Dish":
+                            case "Plat":
                                 currentCategory = dishCategories;
                                 break;
                             case "Dessert":
@@ -575,7 +573,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                                 currentCategory = salades;
                                 setCategoryText(currentCategory);
                                 break;
-                            case "Dish":
+                            case "Plat":
                                 currentCategory = burgers;
                                 setCategoryText(currentCategory);
                                 break;
@@ -599,7 +597,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                             case "Entree":
                                 currentCategory = entreeCategories;
                                 break;
-                            case "Dish":
+                            case "Plat":
                                 currentCategory = dishCategories;
                                 break;
                             case "Dessert":
@@ -622,7 +620,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                                 currentCategory = autres;
                                 setCategoryText(currentCategory);
                                 break;
-                            case "Dish":
+                            case "Plat":
                                 currentCategory = poissons;
                                 setCategoryText(currentCategory);
                                 break;
@@ -646,7 +644,7 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                             case "Entree":
                                 currentCategory = entreeCategories;
                                 break;
-                            case "Dish":
+                            case "Plat":
                                 currentCategory = dishCategories;
                                 break;
                             case "Dessert":
@@ -702,6 +700,31 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+<<<<<<< HEAD
+=======
+    private void discardChoosenItem(int chair_id)
+    {
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(new
+                    File(getFilesDir() + File.separator + "table-"+getIntent().getIntExtra("table_id",0)+"_chair-"+Integer.toString(chair_id)+".txt")));
+            String read;
+            StringBuilder builder = new StringBuilder("");
+
+            while ((read = bufferedReader.readLine()) != null) {
+                builder.append(read);
+            }
+            Log.d("Output", builder.toString());
+            bufferedReader.close();
+            if(builder.toString().contains(currentStep+":"))
+            {
+                //TODO delete currentStep+":"+choosen_item then rewrite the file
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+>>>>>>> 12d654820198a88528c373e3570c6d651b2b5692
     private boolean checkIsOnView(float x, float y, View view) {
         float density = getResources().getDisplayMetrics().density;
 
@@ -798,12 +821,31 @@ public class TableActivity extends AppCompatActivity implements View.OnClickList
                 Log.i("onTouchEvent", "ACTION_UP");
                 if (!choice_selected) {
                     if (!checkIsOnView(event.getX(), event.getY(), center_table) && four_choice_menu != null) {
-                        //if (started_from_center_table) {
-                            if (clickOnReleaseButton(event.getX(), event.getY(), true)) {
-                            }
-                        //}
+                        if (four_choice_menu.getVisibility() == View.VISIBLE)
+                        {
+                            clickOnReleaseButton(event.getX(), event.getY(), true);
+                        }
                     } else if (checkIsOnView(event.getX(), event.getY(), center_table) && four_choice_menu_was_displayed && four_choice_menu != null) {
                         four_choice_menu.setVisibility(View.INVISIBLE);
+                        choice_selected = false;
+                        category_choice_selected = false;
+                        switch (currentStep)
+                        {
+                            case "Aperitif":
+                                currentCategory = aperitifCategories;
+                                break;
+                            case "Entree":
+                                currentCategory = entreeCategories;
+                                break;
+                            case "Plat":
+                                currentCategory = dishCategories;
+                                break;
+                            case "Dessert":
+                                currentCategory = dessertCategories;
+                                setCategoryText(currentCategory);
+                                break;
+                        }
+                        setCategoryText(currentCategory);
                     }
                 } else if (dragging) {
                     Log.i("onTouch", "start drop");
