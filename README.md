@@ -4,8 +4,6 @@ UI application that help restaurant waiters to register orders easily.
 
 Warning : this application is based on the position of events get from touch listener and has been designed with a Samsung J3. Using an another device may create some touch problems.
 
-A functionnal version of the application is available downloading the commit tagged "Presentable".
-
 When launching the app, the first view of a restaurant room appears. 
 To select a table, click on it.
 
